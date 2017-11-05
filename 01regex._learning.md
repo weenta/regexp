@@ -115,8 +115,22 @@
 ```js
     // 只有分组才存在引用
     let regex =  /^(\d{4})-(\d{1,2})-(\d{1,2})$/
-    regex.test('2014-3-50')
-    console.log(RegExp.$1)
-    console.log(RegExp.$2)
-    console.log(RegExp.$3)
+    regex.test('2014-3-15')
+    console.log(RegExp.$1)      // '2014'
+    console.log(RegExp.$2)      // '3'
+    console.log(RegExp.$3)      // '15'
+
+    // 匹配a标签
+    var regex1 = /<a\s+href\s*=\s*['"]([^'"\s]+)['"]>([^<]+)<\/a>/g
+    var str = '<a href="www.baidu.com">百度</a>'
+    regex1.test(str)    //  true
+    RegExp.$1   //  "www.baidu.com"
+    RegExp.$2   //  "百度"
+    str.match(regex1)   // ["<a href="www.baidu.com">百度</a>"]
+
+    // 提取img标签的src属性
+    var img = '<img src="http://mpic.tiankong.com/935/cce/935cce5611ee35530947666ef1201206/640.jpg"><img src="http://mpic.tiankong.com/93a/044/93a0449f72bffef31df4cca9017fa8af/640.jpg"><img src = "http://mpic.tiankong.com/0e8/9b0/0e89b0b5eb676ad004b103c0caeda066/640.jpg">'
+    var regex2 = /http:\/\/([\w\.\/]+)+[^'"]/g
+    img.match(regex2)   // ["http://mpic.tiankong.com/935/cce/935cce5611ee35530947666ef1201206/640.jpg", "http://mpic.tiankong.com/93a/044/93a0449f72bffef31df4cca9017fa8af/640.jpg", "http://mpic.tiankong.com/0e8/9b0/0e89b0b5eb676ad004b103c0caeda066/640.jpg"]
+
 ```
