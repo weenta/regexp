@@ -78,6 +78,14 @@
     regex.test('</>')       // true
 ```
 
+- 懒惰量词(lazy quantifier)
+> *在不确定是否要匹配的场合, 先尝试不匹配, 测试正则后面的元素, 如果失败, 在回来重新尝试匹配* 
+```js
+    *?
+    +?
+    ??
+```
+
 ### 分组(grouping) `()`
 > 将多个字符组包裹起来 作为一个整体
 
@@ -111,7 +119,8 @@
     /^[1-9](\d{14}|\d{17}[\dx])$/
 ```
 
-- 引用
+- 反向引用
+> *允许正则表达式内部引用之前的捕获**分组匹配**的文本*
 ```js
     // 只有分组才存在引用
     let regex =  /^(\d{4})-(\d{1,2})-(\d{1,2})$/
@@ -120,7 +129,24 @@
     console.log(RegExp.$2)      // '3'
     console.log(RegExp.$3)      // '15'
 
-    // 匹配a标签
+
+   // 匹配重复字母
+   var regex = /([a-z])\1/      // \1 -> group=1
+   regex.test('book')       // true
+   regex.test('car')        // false
+   regex.text('banana')     // false
+   regex.test('food')       // true
+
+   // 匹配html闭合标签'<div></div>'
+   var regex = /<([^<]+)>.*?<\/\1>/
+   var node = '<div>hello world<</div>'
+   regex.test(node)
+```
+
+- match函数 `str.match(regexp)`    
+>  返回一个包含了整个匹配结果以及任何括号捕获的匹配结果的 `Array` ；如果没有匹配项，则返回 `null`
+```js
+     // 匹配a标签
     var regex1 = /<a\s+href\s*=\s*['"]([^'"\s]+)['"]>([^<]+)<\/a>/g
     var str = '<a href="www.baidu.com">百度</a>'
     regex1.test(str)    //  true
@@ -128,9 +154,25 @@
     RegExp.$2   //  "百度"
     str.match(regex1)   // ["<a href="www.baidu.com">百度</a>"]
 
-    // 提取img标签的src属性
+    // 提取富文本中img标签的src属性
     var img = '<img src="http://mpic.tiankong.com/935/cce/935cce5611ee35530947666ef1201206/640.jpg"><img src="http://mpic.tiankong.com/93a/044/93a0449f72bffef31df4cca9017fa8af/640.jpg"><img src = "http://mpic.tiankong.com/0e8/9b0/0e89b0b5eb676ad004b103c0caeda066/640.jpg">'
     var regex2 = /http:\/\/([\w\.\/]+)+[^'"]/g
     img.match(regex2)   // ["http://mpic.tiankong.com/935/cce/935cce5611ee35530947666ef1201206/640.jpg", "http://mpic.tiankong.com/93a/044/93a0449f72bffef31df4cca9017fa8af/640.jpg", "http://mpic.tiankong.com/0e8/9b0/0e89b0b5eb676ad004b103c0caeda066/640.jpg"]
 
+```
+
+- replace函数 `str.replace(regexp, newSubStr)`    
+> 返回替换后的string                  
+>[str.replace(regexp, newSubStr)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+```js
+    // 日期替换
+    // 2012-10-31 ->  2012/10/31
+    var str = '2012-10-31'
+    var regex = /-/g
+    str.replace(regex,'/')      // 2012/10/31
+
+    // 手机号隐藏中间4位
+    var tel = '15260435677'
+    var regex = /(\d{3})\d{4}(\d{4})/
+    tel.replace(regex,'$1****$2')   // 152****5677
 ```
