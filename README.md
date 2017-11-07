@@ -137,10 +137,33 @@
    regex.text('banana')     // false
    regex.test('food')       // true
 
+
    // 匹配html闭合标签'<div></div>'
    var regex = /<([^<]+)>.*?<\/\1>/
    var node = '<div>hello world<</div>'
-   regex.test(node)
+   regex.test(node)     // true
+
+
+   // 匹配html标签`<div class='title'>hello world</div>`
+   var node = "<div class='title'>hello world</div>"
+                // 不匹配空格  // 空格+非<
+   var regex = /([a-zA-Z0-9]+)(\s[^<]+)?>.*<\/\1>/
+   regex.test(node)     // true
+
+
+   // 匹配AABB类词语
+   var regex = /(\S)$1(\S)$2/
+   var str1 = '红红火火',
+       str2 = '朝朝暮暮',
+       str3 = '长长久久';
+   regex.test(str1)     // true    
+   regex.test(str2)     // true
+   regex.test(str3)     // true
+
+   // 
+   var regex = /(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)(\d)/
+   var str = '123456789065' 
+
 ```
 
 - match函数 `str.match(regexp)`    
