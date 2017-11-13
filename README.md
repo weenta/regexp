@@ -199,3 +199,56 @@
     var regex = /(\d{3})\d{4}(\d{4})/
     tel.replace(regex,'$1****$2')   // 152****5677
 ```
+
+### 断言 (assertion)   
+> 不匹配文本, 只匹配某个位置(锚点)
+
+- 单词边界(world boundary)  `\b`
+```js
+    var regex = /\brow\b/
+    regex.test('tomorrow')   // false
+    regex.test('brown')      // false
+    regex.test('rowdy')      // false
+    regex.test('row')        // true
+
+    var regexB = /row\b/
+    regexB.test('tomorrow')  // true
+    regexB.test('brown')     // false
+    regexB.test('rowdy')     // false
+    regexB.test('row')       // true
+
+    var Bregex = /\brow/
+    regexB.test('tomorrow')  // false
+    regexB.test('brown')     // false
+    regexB.test('rowdy')     // true
+    regexB.test('row')       // true
+```
+
+- 行起始/结束位置              
+    - `^` 起始位置
+    - `$` 结束位置
+```js
+
+```
+
+- 环视
+
+
+
+### 匹配模式
+> 不区分大小写 单行模式 多行模式 注释模式
+
+```js
+    // 不区分大小写 `/regex/i`
+    var regex1 = /iphone/i
+    regex1.test('iphone')       // true
+    regex1.test('IPHONE')       // true
+    regex1.test('IphONe')       // true
+
+    // 单行模式 *js不支持*
+
+    // 多行模式 `/regex/m`
+    
+
+    
+```
